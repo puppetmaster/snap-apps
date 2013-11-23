@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Le Corps</title>
+<!-- jQuery -->
+<link type="text/css" href="./css/jquery-ui.css" rel="Stylesheet">
+</script>
+<script src="./scripts/jquery.min.js"></script>
+<script src="./scripts/jquery-ui.min.js"></script>
+
+<!-- o3v styles -->
+<link type="text/css" href="./css/main_ui.css" rel="Stylesheet">
+<link rel="stylesheet" type="text/css" href="./css/general.css">
+
+<!-- Local -->
+<script type="text/javascript">
+  var o3v = {};  // open-3d-viewer namespace
+  </script>
+
+  <!-- Webgl -->
+  <script type="text/javascript" src="./scripts/gl-matrix-min.js"></script>
+  <script type="text/javascript" src="./scripts/webgl.js"></script>
+  <script type="text/javascript" src="./scripts/loader.js"></script>
+  <script type="text/javascript" src="./scripts/renderer.js"></script>
+  <script type="text/javascript" src="./scripts/webgl_util.js"></script>
+
+  <!-- o3v specific -->
+  <script type="text/javascript" src="./scripts/common.js"></script>
+  <script type="text/javascript" src="./scripts/models.js"></script>
+  <script type="text/javascript" src="./scripts/entities.js"></script>
+  <script type="text/javascript" src="./scripts/content.js"></script>
+  <script type="text/javascript" src="./scripts/layer.js"></script>
+  <script type="text/javascript" src="./scripts/history.js"></script>
+  <script type="text/javascript" src="./scripts/layers_ui.js"></script>
+  <script type="text/javascript" src="./scripts/gestures.js"></script>
+  <script type="text/javascript" src="./scripts/select.js"></script>
+  <script type="text/javascript" src="./scripts/label.js"></script>
+  <script type="text/javascript" src="./scripts/nav_ui.js"></script>
+  <script type="text/javascript" src="./scripts/navigate.js"></script>
+  <script type="text/javascript" src="./scripts/input_handler.js"></script>
+  <script type="text/javascript" src="./scripts/search.js"></script>
+  <script type="text/javascript" src="./scripts/select.js"></script>
+  <script type="text/javascript" src="./scripts/interpolant.js"></script>
+  <script type="text/javascript" src="./scripts/opacity.js"></script>
+  <script type="text/javascript" src="./scripts/main_ui.js"></script>
+  <script type="text/javascript" src="./scripts/render_interface.js"></script>
+  <script type="text/javascript" src="./scripts/viewer.js"></script>
+
+  <script type="text/javascript">
+  <!-- Start viewer. -->
+  $(document).ready(function() {
+    // The assignment to window.viewer_ is ONLY for debugging.
+    // This variable should NEVER be accessed from code.
+    window.viewer_ = new o3v.Viewer();
+});
+  </script>
+
+  <link href="./facebox/facebox.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="./facebox/facebox.js" type="text/javascript"></script> 
+
+  <!-- Facebox popups for links -->
+  <script type="text/javascript">
+  jQuery(document).ready(function($) {
+  	jQuery('a[rel*=facebox]').facebox();
+	}); 
+	function switchTo(window){
+		jQuery(document).trigger('close.facebox');
+		
+		function clicky(){
+			jQuery('#link-'+window).trigger('click');
+		}
+		
+		setTimeout(clicky,500);			
+	}
+	</script>
+
+	<body>
+
+		<!-- Canvas for verifying webgl -->
+		<!-- TODO(dkogan): dynamically create this -->
+		<canvas id="gltest" style="display:none"></canvas>
+
+		<!-- Container for labels -->
+		<!-- TODO(dkogan): dynamically create this and use css -->
+		<div id="labelcontainer" style="width:0px; height:0px; left:0px; top:0px; position:absolute; z-index:1"></div>
+
+		<!-- Quick help panel -->
+
+		<a href="#help" rel="facebox" id="link-help"><img id="help-hidden" class="help-hidden" src="./images/help.png" alt="?"></a>
+		<div id="opac_idx" style="display:none;left:50%;top:100%;position:absolute;margin-top:-50px;color:#06F;z-index:3;margin-left:-89px"></div>
+
+		<div id="r0" class="indicator"> </div>
+		<div id="r1" class="indicator"> </div>
+		<div id="r2" class="indicator"> </div>
+		<div id="r3" class="indicator"> </div>
+		<div id="r4" class="indicator"> </div>
+		<div id="r5" class="indicator"> </div>
+		<div id="r6" class="indicator"> </div>
+		<div id="r7" class="indicator"> </div>
+
+		<div id="loading-feedback" class="loading-feedback" style="visibility: hidden; ">
+			<label>Chargement</label>
+			<div><span id="loading-bar" style="width: 0px; "></span></div>
+		</div>
+
+<div id="help" class="pop">
+	<div id="help-content">
+		<b>Guide</b>
+		<br>
+		<br>
+		<b>Navigation</b>
+		<li>Cliquez sur + faire glisser avec la souris pour tourner, faites défiler la molette pour zoomer.
+		<li>Ou utilisez les boutons en haut à gauche. Pour réinitialiser la vue, cliquez sur le bouton Accueil.
+		<li>Ou utilisez les touches fléchées et Page Up / Page Down. Pour réinitialiser la vue, la Touche Accueil.
+		<br>
+		<br>
+		<b>Curseur</b>
+		<li>Utilisez le curseur Opacité sur la gauche pour révéler les couches.
+		<li>Cliquez sur la bascule en dessous du curseur pour contrôler couches individuellement..
+		<br>
+		<br>
+		<b>Sélection</b>
+		<li>Utilisez la boîte de recherche en haut à droite pour la recherche, ou cliquez sur les entités pour les sélectionner.
+		<li>Cliquez sur l'arrière-plan ou sur une étiquette pour annuler la sélection.
+		<li>Ctrl + clic sur des entités ou des étiquettes pour cacher entités. (Cmd + clic sur Mac).
+		<li>Maj + clic sur les entités ou les étiquettes (ou cliquez sur l'icône "épingle" dans une étiquette) pour garder la sélection. Cela permet de garder l'entité sélectionné lorsque vous en sélectionnez d'autres.
+		<li>Certaines entités peuvent être étendues en cliquant sur le «plus» d'une étiquette.
+		<br>
+		<br>
+		<b>Modèles</b>
+		<li>Utiliser bouton représentant les modèles dans la partie supérieure de la glissière pour changer les modèles.
+		</div>
+	</div>
+</body></html>

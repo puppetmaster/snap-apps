@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <p>
+        Vos collaborateurs peuvent rejoindre votre instance SNAP à l'adresse suivante
+      </p>
+      <h2 id="public-url"></h2>
+      <p>
+        <i>
+          Assurez vous auparavant qu'ils soient sur le même réseau que vous !
+        </i>
+      </p>
+      <p>
+        Ils peuvent également scanner ce QRCode pour rejoindre automatiquement l'adresse précédente
+      </p>
+      <div id="qrcode"></div>
+      <p>
+        QRCode généré à partir de la librairie <a href="https://github.com/davidshimjs/qrcodejs">QRCode.js</a>
+      </p>
+    </div>
+    <script type="text/javascript" src="scripts/qrcode.min.js"></script>
+    <script type="text/javascript" src="scripts/share.js"></script>
+  </body>
+</html>

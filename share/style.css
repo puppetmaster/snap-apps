@@ -1,0 +1,13 @@
+
+body {
+  font-family: 'Droid Sans', 'Helvetica', sans-serif;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+#qrcode {
+  display: inline-block;
+}
